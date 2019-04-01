@@ -48,7 +48,13 @@ public class Utils {
         writeIntlNames(builder, doc.getCity(), "city", languages);
         writeIntlNames(builder, doc.getCountry(), "country", languages);
         writeIntlNames(builder, doc.getState(), "state", languages);
-        writeIntlNames(builder, doc.getStreet(), "street", languages);
+
+        Map<String, String> test = doc.getStreet();
+        if (test != null && test.get("name") != null && (test.get("name:de") == null || test.get("name:de").isEmpty())) {
+            test.put("name:de", test.get("name"));
+        }
+
+        writeIntlNames(builder, test, "street", languages);
         writeContext(builder, doc.getContext(), languages);
         writeExtent(builder, doc.getBbox());
 
